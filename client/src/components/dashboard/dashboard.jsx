@@ -5,7 +5,7 @@ import Sidebar from "./sideBar/side-bar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import MenuIcon from "@mui/icons-material/Menu";
-import DashboardContent from "./dashboardeEvents/dashboardContent";
+import DashboardContent from "./dashboardEvents/dashboardContent";
 import EventsPage from "../events/events";
 
 const Dashboard = () => {
