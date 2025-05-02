@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext, useState, useEffect } from "react";
+import Login from "./components/login/login";
+import { AuthProvider, AuthContext } from "./AuthContext";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 
-function App() {
+
+const PrivateRoute = ({ children }) => {
+  const { isLoggedIn } = useContext(AuthContext);
+  return isLoggedIn ? children : <Navigate to='/login' />;
+};
+
+const App = () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/* login */}
+          <Route path='/' element={<Navigate to='/login' />} />
+        
+          <Route path='/login' element={<Login />} />
+       
+
+          {/* <Route
+            path='/validate-otp-login'
+            element={
+              <PrivateRoute>
+                <ValidateOTPLogin />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/home'
+            element={
+              <PrivateRoute>
+                <HomePage />
+              </PrivateRoute>
+            }
+          /> */}
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
-}
+};
 
 export default App;

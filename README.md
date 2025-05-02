@@ -24,3 +24,9 @@ Project Setup
 1. clone the project from github
 2. inside the project folder run "npm install"
 3. run "npm run dev"
+
+
+# database
+need to provide below details in your .env file
+DB_PASSWORD = "enter your password"
+DATABASE = "events"

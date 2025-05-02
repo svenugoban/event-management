@@ -1,0 +1,59 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-form {
+  text-align: center;
+  width: 450px;
+  margin-left: 60px;
+}
+
+.forgot-password {
+  display: block;
+  text-align: left;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.form-details {
+  margin-top: 60px;
+}
+
+.login-button {
+  color: #54bbe3;
+  width: 100%;
+  padding-top: 30px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.register-button-container {
+  text-align: right; /* Aligns the button to the right */
+}
+
+.register-button {
+  color: #54bbe3;
+  padding: 30px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block; /* Ensure the button stays inline and respects text alignment */
+  text-align: right; /* Aligns the button to the right */
+}
+
+.logo {
+  width: 150px; /* Adjust logo size */
+  transition: width 0.3s ease; /* Smooth transition for resizing */
+}
