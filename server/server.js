@@ -2,11 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRouter");
+const runMigration = require("./config/migration");
 
 dotenv.config();
 
 const app = express();
-const runMigration = require("./config/migration");
 
 runMigration();
 app.use(cors());

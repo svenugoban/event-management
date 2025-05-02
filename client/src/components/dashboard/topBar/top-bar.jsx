@@ -1,5 +1,5 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Grid, Avatar, Box } from "@mui/material";
+import { AppBar, Toolbar, Typography, Avatar, Box } from "@mui/material";
 import "./top-bar.css"; // Importing the external CSS file
 import { useSelector } from "react-redux";
 

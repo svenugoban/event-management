@@ -5,13 +5,17 @@ import PeopleIcon from "@mui/icons-material/People";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+
 import { Link, useLocation } from "react-router-dom";
+
 import "./side-bar.css";
 import CloseIcon from "@mui/icons-material/Close";
 
 const expandedWidth = 255; // Full width for larger screens
+
 const Sidebar = ({ setIsSidebarCollapsed }) => {
   const location = useLocation(); // Get the current route
+
   const isActive = (path) => location.pathname === path; // Check if the route matches
 
   return (
@@ -31,7 +35,7 @@ const Sidebar = ({ setIsSidebarCollapsed }) => {
         },
       }}
     >
-      <Box>
+      <Box p={2}>
         {window.innerWidth < 1024 && (
           <>
             <IconButton onClick={() => setIsSidebarCollapsed?.(true)}>
@@ -40,11 +44,10 @@ const Sidebar = ({ setIsSidebarCollapsed }) => {
             <br />
           </>
         )}
-
         <img src='/images/logo.png' alt='event' className='sidebar-logo' />
       </Box>
       <List>
-        
+        {" "}
         <ListItem
           button
           component={Link}

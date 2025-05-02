@@ -1,44 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Box, Grid, IconButton } from "@mui/material";
 import Topbar from "./topBar/top-bar";
 import Sidebar from "./sideBar/side-bar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 import MenuIcon from "@mui/icons-material/Menu";
+import DashboardContent from "./Events/dashboardContent";
 
 const Dashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
   const searchParams = new URLSearchParams(location.search);
-  const taskId = searchParams.get("id");
 
   // Sidebar collapse state
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(window.innerWidth < 1024);
 
   // Function to render forms dynamically based on URL path
-  // const renderForm = useCallback(() => {
-  //   switch (location.pathname) {
-  //     case "/logout":
-  //       return <HomePage />;
-  //     case "/task-history":
-  //       return <TaskHistory />;
+  const renderForm = useCallback(() => {
+    switch (location.pathname) {
+      case "/dashboard":
+        return <DashboardContent />;
 
-  //
-
-  //
-  //     default:
-  //       return user.roleid === 4 ? (
-  //         <SupportTaskList />
-  //       ) : user.roleid === 2 || user.roleid === 3 ? (
-  //         <ManagerTaskList />
-  //       ) : (
-  //         <></>
-  //       );
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [location.pathname, user.roleid]);
+      default:
+        return <DashboardContent />;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname, user.roleid]);
 
   useEffect(() => {
     // Handle browser resizing
@@ -95,16 +83,13 @@ const Dashboard = () => {
                 <MenuIcon />
               </IconButton>
             </Grid>
-            <Grid item>
-              <img src='/images/logo.png' alt='Active Care Logo' className='sidebar-logo' />
-            </Grid>
           </Grid>
         ) : (
           <Sidebar setIsSidebarCollapsed={setIsSidebarCollapsed} />
         )}
       </Box>
-      <Box mt={10} ml={window.innerWidth < 1024 ? 0 : 30}>
-        {/* {renderForm()} */}
+      <Box mt={10} ml={window.innerWidth < 1024 ? 0 : 35}>
+        {renderForm()}
       </Box>
     </Box>
   );
