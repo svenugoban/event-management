@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Grid } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PersonIcon from "@mui/icons-material/Person";
@@ -21,26 +21,27 @@ const EventCard = ({ title, date, time, location, host, description }) => (
     </Typography>
 
     <Box mt={1}>
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }} mt={1}>
         <CalendarTodayIcon fontSize='small' />
-        <Typography fontSize='14px'>{`${date} – ${time}`}</Typography>
+        <Typography sx={{ fontSize: "14px", color: "black" }}>{`${date} – ${time}`}</Typography>
       </Box>
 
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }} mt={1}>
         <LocationOnIcon fontSize='small' />
-        <Typography fontSize='14px'>{location}</Typography>
+        <Typography sx={{ fontSize: "14px", color: "black" }}>{location}</Typography>
       </Box>
 
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }} mt={1}>
         <PersonIcon fontSize='small' />
-        <Typography fontSize='14px'>Hosted by {host}</Typography>
+        <Typography sx={{ fontSize: "14px", color: "black" }}>Hosted by {host}</Typography>
       </Box>
 
-      <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
+      <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }} mt={1}>
         <DescriptionIcon fontSize='small' />
         <Typography
-          fontSize='14px'
           sx={{
+            fontSize: "14px",
+            color: "black",
             whiteSpace: "normal",
             wordBreak: "break-word",
             overflowWrap: "break-word",
@@ -51,7 +52,7 @@ const EventCard = ({ title, date, time, location, host, description }) => (
         </Typography>
       </Box>
 
-      <Button variant='contained' size='small' sx={{ bgcolor: "green", mb: 1, mt:1 }}>
+      <Button variant='contained' size='small' sx={{ bgcolor: "green", mb: 1, mt: 1 }}>
         Upcoming
       </Button>
     </Box>

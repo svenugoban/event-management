@@ -5,13 +5,13 @@ import Sidebar from "./sideBar/side-bar";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import MenuIcon from "@mui/icons-material/Menu";
-import DashboardContent from "./Events/dashboardContent";
+import DashboardContent from "./dashboardeEvents/dashboardContent";
+import EventsPage from "../events/events";
 
 const Dashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
-  const searchParams = new URLSearchParams(location.search);
 
   // Sidebar collapse state
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(window.innerWidth < 1024);
@@ -21,6 +21,8 @@ const Dashboard = () => {
     switch (location.pathname) {
       case "/dashboard":
         return <DashboardContent />;
+        case "/events":
+        return <EventsPage />;
 
       default:
         return <DashboardContent />;

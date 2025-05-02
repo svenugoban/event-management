@@ -1,10 +1,10 @@
 import React from "react";
-import { Box, Typography, Grid, Select, MenuItem, Pagination } from "@mui/material";
+import { Box, Typography, Grid, Select, MenuItem } from "@mui/material";
 import EventCard from "./eventCard";
 
 const DashboardContent = () => {
   return (
-    <Box sx={{ mt: 8, p: 3 }}>
+    <Box sx={{ p: 3 }}>
       <Typography sx={{ fontSize: "24px", fontWeight: "bold", color: "black" }} align='left'>
         Dashboard
       </Typography>
@@ -27,7 +27,7 @@ const DashboardContent = () => {
         date='Apr 15, 2025 – 09.00 AM'
         location='Hatch Working Space, Colombo'
         host='Jhon Smith'
-        description='Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit...efhgbvjhwertebgvjierheydskujdbgvuierhgujwerguohhuieryguerhguiregfiwejbhfvuiewbgvjbvhrbfdhbrfdbfdbh'
+        description='Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit...hfvuiewbgvjbvhrbfdhbrfdbfdbh'
       />
 
       <EventCard
@@ -37,10 +37,6 @@ const DashboardContent = () => {
         host='Jhon Smith'
         description='Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit...'
       />
-
-      <Box mt={2} display='flex' justifyContent='center'>
-        <Pagination count={10} color='primary' />
-      </Box>
     </Box>
   );
 };

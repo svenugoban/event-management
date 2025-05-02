@@ -1,25 +1,47 @@
-import React from "react";
-import Login from "./components/login/login";
-import { AuthProvider} from "./AuthContext";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
-import Register from "./components/register/register";
-import Dashboard from "./components/dashboard/dashboard";
+import React, { Suspense, lazy, useContext } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { AuthContext, AuthProvider } from "./AuthContext";
 
+// Lazy-loaded components
+const Login = lazy(() => import("./components/login/login"));
+const Register = lazy(() => import("./components/register/register"));
+const Dashboard = lazy(() => import("./components/dashboard/dashboard"));
 
-
+// Private route wrapper
+const PrivateRoute = ({ children }) => {
+  const { isLoggedIn } = useContext(AuthContext);
+  return isLoggedIn ? children : <Navigate to='/login' />;
+};
 
 const App = () => {
-
   return (
     <AuthProvider>
       <Router>
-        <Routes>
-          {/* login */}
-          <Route path='/' element={<Navigate to='/login' />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/dashboard' element={<Dashboard />} />
-        </Routes>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+
+            {/* Secured routes */}
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/events"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </Suspense>
       </Router>
     </AuthProvider>
   );

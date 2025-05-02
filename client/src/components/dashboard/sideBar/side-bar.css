@@ -14,13 +14,11 @@
 
 .sidebar-text {
   font-size: 14px; /* Smaller text size */
-  display: none; /* Hide the text on mobile */
 }
 
 .logout-text {
   color: red;
   font-size: 14px; /* Smaller text size */
-  display: none; /* Hide the text on mobile */
 }
 
 .MuiDrawer-paper {
@@ -30,16 +28,4 @@
   left: 0;
   top: 0;
   height: 100vh;
-}
-
-@media (min-width: 600px) {
-  .sidebar-text {
-    display: block; /* Show text for larger screens */
-  }
-}
-
-@media (min-width: 600px) {
-  .logout-text {
-    display: block; /* Show text for larger screens */
-  }
 }

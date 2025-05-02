@@ -1,13 +1,10 @@
 import React from "react";
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Box, Typography, IconButton } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import PeopleIcon from "@mui/icons-material/People";
+import { FaUser } from "react-icons/fa";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
-
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-
 import { Link, useLocation } from "react-router-dom";
-
 import "./side-bar.css";
 import CloseIcon from "@mui/icons-material/Close";
 
@@ -15,7 +12,6 @@ const expandedWidth = 255; // Full width for larger screens
 
 const Sidebar = ({ setIsSidebarCollapsed }) => {
   const location = useLocation(); // Get the current route
-
   const isActive = (path) => location.pathname === path; // Check if the route matches
 
   return (
@@ -47,7 +43,6 @@ const Sidebar = ({ setIsSidebarCollapsed }) => {
         <img src='/images/logo.png' alt='event' className='sidebar-logo' />
       </Box>
       <List>
-        {" "}
         <ListItem
           button
           component={Link}
@@ -63,26 +58,35 @@ const Sidebar = ({ setIsSidebarCollapsed }) => {
           </ListItemIcon>
           <ListItemText primary='Dashboard' className='sidebar-text' />
         </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <PeopleIcon fontSize='small' />
-          </ListItemIcon>
-          <ListItemText primary='Manage Users' className='sidebar-text' />
-        </ListItem>
         <ListItem
           button
           component={Link}
-          to='/daily-logs'
+          to='/events'
           onClick={() => window.innerWidth < 1024 && setIsSidebarCollapsed?.(true)}
           sx={{
-            backgroundColor: isActive("/daily-logs") ? "#e3f2fd" : "transparent",
-            color: isActive("/daily-logs") ? "#1976d2" : "inherit",
+            backgroundColor: isActive("/events") ? "#e3f2fd" : "transparent",
+            color: isActive("/events") ? "#1976d2" : "inherit",
           }}
         >
           <ListItemIcon>
             <VerifiedUserIcon fontSize='small' sx={{ color: isActive("/daily-logs") ? "#1976d2" : "inherit" }} />
           </ListItemIcon>
-          <ListItemText primary='Daily Logs' className='sidebar-text' />
+          <ListItemText primary='Events' className='sidebar-text' />
+        </ListItem>
+        <ListItem
+          button
+          component={Link}
+          to='/even'
+          onClick={() => window.innerWidth < 1024 && setIsSidebarCollapsed?.(true)}
+          sx={{
+            backgroundColor: isActive("/even") ? "#e3f2fd" : "transparent",
+            color: isActive("/even") ? "#1976d2" : "inherit",
+          }}
+        >
+          <ListItemIcon>
+            <FaUser fontSize='small' sx={{ color: isActive("/daily-logs") ? "#1976d2" : "inherit" }} />
+          </ListItemIcon>
+          <ListItemText primary='User profile' className='sidebar-text' />
         </ListItem>
         <Typography ml={2} mt={45}></Typography>
         <ListItem
