@@ -1,14 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
+import React from "react";
 import Login from "./components/login/login";
-import { AuthProvider, AuthContext } from "./AuthContext";
+import { AuthProvider} from "./AuthContext";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Register from "./components/register/register";
+import Dashboard from "./components/dashboard/dashboard";
 
 
-const PrivateRoute = ({ children }) => {
-  const { isLoggedIn } = useContext(AuthContext);
-  return isLoggedIn ? children : <Navigate to='/login' />;
-};
+
 
 const App = () => {
 
@@ -20,24 +18,7 @@ const App = () => {
           <Route path='/' element={<Navigate to='/login' />} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-       
-
-          {/* <Route
-            path='/validate-otp-login'
-            element={
-              <PrivateRoute>
-                <ValidateOTPLogin />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path='/home'
-            element={
-              <PrivateRoute>
-                <HomePage />
-              </PrivateRoute>
-            }
-          /> */}
+          <Route path='/dashboard' element={<Dashboard />} />
         </Routes>
       </Router>
     </AuthProvider>
