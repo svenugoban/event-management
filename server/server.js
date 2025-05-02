@@ -6,8 +6,12 @@ const userRoutes = require("./routes/userRouter");
 dotenv.config();
 
 const app = express();
+const runMigration = require("./config/migration");
+
+runMigration();
 app.use(cors());
 app.use(express.json());
+
 
 app.use("/api/user", userRoutes);
 
