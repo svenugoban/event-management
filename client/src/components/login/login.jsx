@@ -64,7 +64,6 @@ const Login = () => {
               <br />
               and perform event management within the system
             </Typography>
-
             <Formik
               initialValues={{ email: "", password: "" }}
               validationSchema={validationSchema}
@@ -72,7 +71,7 @@ const Login = () => {
             >
               {({ handleChange, isSubmitting, errors, touched }) => (
                 <Form className='form-details'>
-                  <Typography sx={{ fontSize: "18px", color: "black" }} align='left'>
+                  <Typography sx={{ fontSize: "14px", color: "black", fontWeight: "bold" }} align='left' mt={2}>
                     Email
                   </Typography>
                   <Box>
@@ -98,7 +97,7 @@ const Login = () => {
                     />
                   </Box>
 
-                  <Typography sx={{ fontSize: "18px", color: "black" }} align='left'>
+                  <Typography sx={{ fontSize: "14px", color: "black", fontWeight: "bold" }} align='left' mt={2}>
                     Password
                   </Typography>
                   <Box>
@@ -124,11 +123,7 @@ const Login = () => {
                     />
                   </Box>
 
-                  <a href='/request-reset-password' className='forgot-password'>
-                    Forget password?
-                  </a>
-
-                  <Grid mt={3}>
+                  <Grid mt={3} mb={2}>
                     <Button
                       fullWidth
                       variant='contained'
@@ -148,12 +143,15 @@ const Login = () => {
                         "Signing in..."
                       ) : (
                         <>
-                          Sign in
+                          Login
                           <FaArrowRightLong style={{ marginLeft: 8 }} />
                         </>
                       )}
                     </Button>
                   </Grid>
+                  <a href='/Register' className='register'>
+                    Create your account
+                  </a>
                 </Form>
               )}
             </Formik>

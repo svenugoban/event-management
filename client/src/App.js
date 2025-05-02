@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Login from "./components/login/login";
 import { AuthProvider, AuthContext } from "./AuthContext";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import Register from "./components/register/register";
 
 
 const PrivateRoute = ({ children }) => {
@@ -17,7 +18,7 @@ const App = () => {
         <Routes>
           {/* login */}
           <Route path='/' element={<Navigate to='/login' />} />
-        
+          <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
        
 
