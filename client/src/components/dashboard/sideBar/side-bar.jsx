@@ -69,24 +69,24 @@ const Sidebar = ({ setIsSidebarCollapsed }) => {
           }}
         >
           <ListItemIcon>
-            <VerifiedUserIcon fontSize='small' sx={{ color: isActive("/daily-logs") ? "#1976d2" : "inherit" }} />
+            <VerifiedUserIcon fontSize='small' sx={{ color: isActive("/events") ? "#1976d2" : "inherit" }} />
           </ListItemIcon>
           <ListItemText primary='Events' className='sidebar-text' />
         </ListItem>
         <ListItem
           button
           component={Link}
-          to='/even'
+          to='/profile'
           onClick={() => window.innerWidth < 1024 && setIsSidebarCollapsed?.(true)}
           sx={{
-            backgroundColor: isActive("/even") ? "#e3f2fd" : "transparent",
-            color: isActive("/even") ? "#1976d2" : "inherit",
+            backgroundColor: isActive("/profile") ? "#e3f2fd" : "transparent",
+            color: isActive("/profile") ? "#1976d2" : "inherit",
           }}
         >
           <ListItemIcon>
-            <FaUser fontSize='small' sx={{ color: isActive("/daily-logs") ? "#1976d2" : "inherit" }} />
+            <FaUser fontSize='small' sx={{ color: isActive("/profile") ? "#1976d2" : "inherit" }} />
           </ListItemIcon>
-          <ListItemText primary='User profile' className='sidebar-text' />
+          <ListItemText primary='User Profile' className='sidebar-text' />
         </ListItem>
         <Typography ml={2} mt={45}></Typography>
         <ListItem

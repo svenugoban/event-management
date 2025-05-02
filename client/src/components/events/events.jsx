@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Button, Grid, MenuItem, Card, CardContent, Select } from "@mui/material";
+import { Box, Typography, Button, Grid, MenuItem, Card, CardContent, Select, Divider } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PersonIcon from "@mui/icons-material/Person";
@@ -33,7 +33,7 @@ const EventsPage = () => {
       <Typography sx={{ fontSize: "24px", fontWeight: "bold", color: "black" }} align='left'>
         Events
       </Typography>
-
+      <Divider sx={{ my: 2 }} />
       <Grid container spacing={2} alignItems='center' justifyContent='flex-end' mb={2} mt={2}>
         <Grid item xs={12} sm='auto'>
           <Select size='small' displayEmpty defaultValue='' fullWidth>

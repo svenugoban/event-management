@@ -3,15 +3,14 @@ import { Box, Grid, IconButton } from "@mui/material";
 import Topbar from "./topBar/top-bar";
 import Sidebar from "./sideBar/side-bar";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import MenuIcon from "@mui/icons-material/Menu";
 import DashboardContent from "./dashboardEvents/dashboardContent";
 import EventsPage from "../events/events";
+import UserProfile from "../profile/userProfile";
 
 const Dashboard = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.auth.user);
 
   // Sidebar collapse state
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(window.innerWidth < 1024);
@@ -21,14 +20,16 @@ const Dashboard = () => {
     switch (location.pathname) {
       case "/dashboard":
         return <DashboardContent />;
-        case "/events":
+      case "/events":
         return <EventsPage />;
+      case "/profile":
+        return <UserProfile />;
 
       default:
         return <DashboardContent />;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname, user.roleid]);
+  }, [location.pathname]);
 
   useEffect(() => {
     // Handle browser resizing

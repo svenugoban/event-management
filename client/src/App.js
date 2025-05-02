@@ -40,6 +40,14 @@ const App = () => {
                 </PrivateRoute>
               }
             />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </Suspense>
       </Router>

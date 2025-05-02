@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography, Grid, Select, MenuItem } from "@mui/material";
+import { Box, Typography, Grid, Select, MenuItem, Divider } from "@mui/material";
 import EventCard from "./eventCard";
 
 const DashboardContent = () => {
@@ -8,7 +8,7 @@ const DashboardContent = () => {
       <Typography sx={{ fontSize: "24px", fontWeight: "bold", color: "black" }} align='left'>
         Dashboard
       </Typography>
-
+      <Divider sx={{ my: 2 }} />
       <Grid container spacing={2} alignItems='center' justifyContent='flex-end' mb={2} mt={2}>
         <Grid item xs={12} sm='auto'>
           <Select size='small' displayEmpty defaultValue='' fullWidth>
