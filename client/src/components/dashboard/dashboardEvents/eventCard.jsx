@@ -52,7 +52,7 @@ const EventCard = ({ title, date, time, location, host, description }) => (
         </Typography>
       </Box>
 
-      <Button variant='contained' size='small' sx={{ bgcolor: "green", mb: 1, mt: 1 }}>
+      <Button  variant='contained' size='small' sx={{ bgcolor: "green", mb: 1, mt: 1, textTransform:'none' }}>
         Upcoming
       </Button>
     </Box>

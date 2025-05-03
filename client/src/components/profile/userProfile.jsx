@@ -20,7 +20,7 @@ const EventCard = ({ date, title, location, datetime }) => (
         }}
       >
         <Typography sx={{ fontSize: "14px", color: "black" }}>APR</Typography>
-        <Typography variant='h6'>{date}</Typography>
+        <Typography sx={{ fontSize: "14px", color: "black" }}>{date}</Typography>
       </Box>
       <Box>
         <Typography sx={{ fontSize: "14px", color: "black", fontWeight: "bold" }}>{title}</Typography>

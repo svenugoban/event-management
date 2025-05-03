@@ -145,6 +145,7 @@ const Register = () => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
+                    textTransform: "none",
                   }}
                 >
                   {isSubmitting ? (
