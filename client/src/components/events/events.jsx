@@ -139,7 +139,7 @@ const EventsPage = () => {
       >
         <DialogTitle>
           <Box display='flex' justifyContent='space-between' alignItems='center'>
-            <DialogTitle>{"Create New Event"}</DialogTitle>
+            <DialogTitle>{"Create Event"}</DialogTitle>
             <IconButton
               aria-label='close'
               onClick={() => {
