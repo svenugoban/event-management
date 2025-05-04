@@ -37,7 +37,6 @@ const Register = () => {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      alert("Registration successful!");
       resetForm();
       navigate("/login");
     } catch (error) {

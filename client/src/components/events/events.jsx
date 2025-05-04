@@ -174,7 +174,7 @@ const EventsPage = () => {
                       handleRegister();
                     }}
                   >
-                    {isEventFuture(event.date, event.time) ? "Register Now" : " Already Started"}
+                    {isEventFuture(event.date, event.time) ? "Register Now" : " Past Event"}
                   </Button>
                   <Button
                     type='submit'
