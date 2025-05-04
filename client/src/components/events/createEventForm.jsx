@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { Box, Button, TextField, Typography, Grid } from "@mui/material";
 import * as Yup from "yup";
+import axios from "axios";
 
 const initialValues = {
   eventTitle: "",
@@ -22,12 +23,30 @@ const validationSchema = Yup.object({
 });
 
 const CreateEventForm = ({ action, onClose }) => {
-  const handleSubmit = (values) => {
-    console.log("Form Values:", values);
+  const handleCreate = async (values) => {
+    try {
+      const response = await axios.post("/api/manage/event", {
+        eventTitle: values.eventTitle,
+        date: values.date, // Format: YYYY-MM-DD
+        time: values.time, // Format: HH:mm:ss
+        location: values.location,
+        description: values.description,
+        hostName: values.hostName,
+      });
+
+      console.log("Event created successfully:", response.data);
+      onClose();
+    } catch (error) {
+      if (error.response) {
+        console.error("Error response from server:", error.response.data);
+      } else {
+        console.error("Request error:", error.message);
+      }
+    }
   };
 
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleCreate}>
       {({ values, errors, touched, handleChange, setFieldValue }) => (
         <Form>
           <Box ml={2} mr={2}>
@@ -93,6 +112,8 @@ const CreateEventForm = ({ action, onClose }) => {
               name='description'
               value={values.description}
               onChange={handleChange}
+              error={touched.description && Boolean(errors.description)}
+              helperText={touched.description && errors.description}
               margin='normal'
             />
             <Typography sx={{ fontSize: "14px", color: "black", fontWeight: "bold" }} mt={1}>

@@ -1,26 +1,12 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Grid,
-  MenuItem,
-  Card,
-  CardContent,
-  Select,
-  Divider,
-  Dialog,
-  DialogTitle,
-  IconButton,
-  DialogContent,
-} from "@mui/material";
+import { Box, Typography, Button, Grid, MenuItem, Card, CardContent, Select, Divider } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PersonIcon from "@mui/icons-material/Person";
 import DescriptionIcon from "@mui/icons-material/Description";
 import PeopleIcon from "@mui/icons-material/People";
 import CreateEventForm from "./createEventForm";
-import CloseIcon from "@mui/icons-material/Close";
+import CustomDialog from "../../common/customDialog";
 
 const mockEvents = [
   {
@@ -130,65 +116,35 @@ const EventsPage = () => {
         ))}
       </Grid>
 
-      <Dialog
-        open={openCreate}
+      <CustomDialog
+        isOpen={openCreate}
         onClose={() => {
           setOpenCreate(false);
         }}
-        fullWidth
+        title={"Create Event"}
       >
-        <DialogTitle>
-          <Box display='flex' justifyContent='space-between' alignItems='center'>
-            <DialogTitle>{"Create Event"}</DialogTitle>
-            <IconButton
-              aria-label='close'
-              onClick={() => {
-                setOpenCreate(false);
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          </Box>
-        </DialogTitle>
-        <DialogContent>
-          <CreateEventForm
-            action={"create"}
-            onClose={() => {
-              setOpenCreate(false);
-            }}
-          />
-        </DialogContent>
-      </Dialog>
+        <CreateEventForm
+          action={"create"}
+          onClose={() => {
+            setOpenCreate(false);
+          }}
+        />
+      </CustomDialog>
 
-      <Dialog
-        open={openEdit}
+      <CustomDialog
+        isOpen={openEdit}
         onClose={() => {
           setOpenEdit(false);
         }}
-        fullWidth
+        title={"Edit Event"}
       >
-        <DialogTitle>
-          <Box display='flex' justifyContent='space-between' alignItems='center'>
-            <DialogTitle>{"Edit Event"}</DialogTitle>
-            <IconButton
-              aria-label='close'
-              onClick={() => {
-                setOpenEdit(false);
-              }}
-            >
-              <CloseIcon />
-            </IconButton>
-          </Box>
-        </DialogTitle>
-        <DialogContent>
-          <CreateEventForm
-            action={"edit"}
-            onClose={() => {
-              setOpenEdit(false);
-            }}
-          />
-        </DialogContent>
-      </Dialog>
+        <CreateEventForm
+          action={"edit"}
+          onClose={() => {
+            setOpenEdit(false);
+          }}
+        />
+      </CustomDialog>
     </Box>
   );
 };

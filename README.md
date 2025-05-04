@@ -27,6 +27,6 @@ Project Setup
 
 
 # database
-need to provide below details in your .env file
+need to provide below details in your .env file inside the server folder
 DB_PASSWORD = "enter your password"
 DATABASE = "events"
