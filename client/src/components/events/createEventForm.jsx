@@ -89,7 +89,7 @@ const CreateEventForm = ({ action, onClose, initialValuesEdit }) => {
                   fullWidth
                   type='date'
                   name='date'
-                  value={action === "create" ? values.date: new Date(values.date).toISOString().split("T")[0]}
+                  value={action === "create" ? values.date : new Date(values.date).toISOString().split("T")[0]}
                   onChange={handleChange}
                   error={touched.date && Boolean(errors.date)}
                   helperText={touched.date && errors.date}

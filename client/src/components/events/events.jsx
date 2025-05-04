@@ -50,7 +50,7 @@ const EventsPage = () => {
   }, [hostName, date]); // re-fetch when filters change
 
   console.log(events);
-  
+
   if (loading) return <div>Loading events...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -64,15 +64,10 @@ const EventsPage = () => {
         <Grid item xs={12} sm='auto'>
           <FormControl fullWidth>
             <Typography sx={{ fontSize: "14px", color: "black" }}>Date</Typography>
-            <Select
-              value={date}
-              onChange={(e) => setDate(new Date(e.target.value).toISOString().split("T")[0])}
-              displayEmpty
-              size='small'
-            >
+            <Select value={date} onChange={(e) => setDate(e.target.value)} displayEmpty size='small'>
               {events.map((loc, index) => (
-                <MenuItem key={index} value={new Date(loc.date).toISOString().split("T")[0]}>
-                  {new Date(loc.date).toISOString().split("T")[0]}
+                <MenuItem key={index} value={loc.date}>
+                  {loc.date}
                 </MenuItem>
               ))}
             </Select>
