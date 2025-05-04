@@ -14,8 +14,6 @@ const EventCard = ({ title, date, time, location, host, description }) => (
       backgroundColor: "#fff",
     }}
   >
-    {/* Left Column - Event Info */}
-
     <Typography fontWeight='bold' fontSize='16px'>
       {title}
     </Typography>
@@ -23,7 +21,14 @@ const EventCard = ({ title, date, time, location, host, description }) => (
     <Box mt={1}>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }} mt={1}>
         <CalendarTodayIcon fontSize='small' />
-        <Typography sx={{ fontSize: "14px", color: "black" }}>{`${date} – ${time}`}</Typography>
+        <Typography sx={{ fontSize: "14px", color: "black" }}>
+          {new Date(date).toLocaleDateString("en-CA", {
+            year: "numeric",
+            month: "long",
+            day: "2-digit",
+          })}{" "}
+          {time}
+        </Typography>
       </Box>
 
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }} mt={1}>
@@ -52,7 +57,7 @@ const EventCard = ({ title, date, time, location, host, description }) => (
         </Typography>
       </Box>
 
-      <Button  variant='contained' size='small' sx={{ bgcolor: "green", mb: 1, mt: 1, textTransform:'none' }}>
+      <Button variant='contained' size='small' sx={{ bgcolor: "green", mb: 1, mt: 1, textTransform: "none" }}>
         Upcoming
       </Button>
     </Box>

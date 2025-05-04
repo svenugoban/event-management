@@ -66,10 +66,40 @@ const deleteEvent = async (req, res) => {
   }
 };
 
+const registerAttendee = async (req, res) => {
+  const { id } = req.params;
+  const { username, email } = req.body;
+
+  try {
+    const event = await Event.getById(id);
+    if (!event) return res.status(404).json({ error: "Event not found" });
+
+    const attendees = Array.isArray(event.attendees) ? event.attendees : [];
+
+    // Prevent duplicates
+    const alreadyRegistered = attendees.some(
+      (att) => att.email === email
+    );
+    if (alreadyRegistered) {
+      return res.status(400).json({ error: "Already registered" });
+    }
+
+    attendees.push({ username, email });
+
+    await Event.update(id, { ...event, attendees });
+
+    res.status(200).json({ message: "Successfully registered", attendees });
+  } catch (error) {
+    console.error("Error registering attendee:", error);
+    res.status(500).json({ error: "Failed to register" });
+  }
+};
+
 module.exports = {
   createEvent,
   getAllEvents,
   getEventById,
   updateEvent,
   deleteEvent,
+  registerAttendee
 };

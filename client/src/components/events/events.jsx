@@ -19,8 +19,10 @@ import PeopleIcon from "@mui/icons-material/People";
 import CreateEventForm from "./createEventForm";
 import CustomDialog from "../../common/customDialog";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const EventsPage = () => {
+  const user = useSelector((state) => state.auth.user);
   const [openCreate, setOpenCreate] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [events, setEvents] = useState([]);
@@ -29,6 +31,12 @@ const EventsPage = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [hostName, setHostName] = useState("");
   const [date, setDate] = useState("");
+
+  const isEventFuture = (date, time) => {
+    const eventDateTime = new Date(`${date}T${time}`);
+    const now = new Date();
+    return eventDateTime > now;
+  };
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -49,7 +57,19 @@ const EventsPage = () => {
     fetchEvents();
   }, [hostName, date]); // re-fetch when filters change
 
-  console.log(events);
+  const handleRegister = async () => {
+    try {
+      const response = await axios.put(`/api/manage/event/${selectedEvent.id}/register`, {
+        username: user.username,
+        email: user.email,
+      });
+
+      // Optional: update local state or refetch event list
+      console.log("Registered:", response.data);
+    } catch (error) {
+      console.error("Registration failed", error);
+    }
+  };
 
   if (loading) return <div>Loading events...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -143,8 +163,18 @@ const EventsPage = () => {
                   </Typography>
                 </Box>
                 <Box display='flex' justifyContent='flex-end' gap={2} mt={3}>
-                  <Button size='small' variant='contained' color='success' sx={{ textTransform: "none" }}>
-                    Register Now
+                  <Button
+                    size='small'
+                    variant='contained'
+                    color='success'
+                    sx={{ textTransform: "none" }}
+                    disabled={!isEventFuture(event.date, event.time)}
+                    onClick={() => {
+                      setSelectedEvent(event);
+                      handleRegister();
+                    }}
+                  >
+                    {isEventFuture(event.date, event.time) ? "Register Now" : " Already Started"}
                   </Button>
                   <Button
                     type='submit'
