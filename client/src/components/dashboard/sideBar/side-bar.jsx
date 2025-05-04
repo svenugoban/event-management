@@ -95,7 +95,6 @@ const Sidebar = ({ setIsSidebarCollapsed }) => {
         <ListItem
           button
           onClick={() => {
-            if (window.innerWidth < 1024) setIsSidebarCollapsed?.(true);
             setLogoutDialogOpen(true); // open dialog
           }}
         >

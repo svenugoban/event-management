@@ -3,21 +3,7 @@
   transition: width 0.3s ease; /* Smooth transition for resizing */
 }
 
-.sidebar-collapse-logo {
-  width: 50px; /* Adjust logo size */
-  transition: width 0.3s ease; /* Smooth transition for resizing */
-}
-
-.MuiListItem-root {
-  padding: 8px 16px; /* Reduce padding for list items */
-}
-
 .sidebar-text {
-  font-size: 14px; /* Smaller text size */
-}
-
-.logout-text {
-  color: red;
   font-size: 14px; /* Smaller text size */
 }
 

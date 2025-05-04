@@ -1,7 +1,7 @@
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .login-form {
@@ -35,21 +35,6 @@
   border-radius: 6px;
   cursor: pointer;
   font-size: 16px;
-}
-
-.register-button-container {
-  text-align: right; /* Aligns the button to the right */
-}
-
-.register-button {
-  color: #54bbe3;
-  padding: 30px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  display: inline-block; /* Ensure the button stays inline and respects text alignment */
-  text-align: right; /* Aligns the button to the right */
 }
 
 .logo {
