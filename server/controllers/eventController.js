@@ -1,5 +1,7 @@
 const Event = require("../models/eventModel");
 
+
+
 // Create a new event
 const createEvent = async (req, res) => {
   try {
@@ -11,16 +13,17 @@ const createEvent = async (req, res) => {
   }
 };
 
-// Get all events
 const getAllEvents = async (req, res) => {
   try {
-    const events = await Event.getAll();
+    const { hostName, date } = req.query; // optional filters
+    const events = await Event.getAll({ hostName, date });
     res.status(200).json(events);
   } catch (error) {
     console.error("Error retrieving events:", error);
     res.status(500).json({ error: "Failed to retrieve events" });
   }
 };
+
 
 // Get a single event by ID
 const getEventById = async (req, res) => {

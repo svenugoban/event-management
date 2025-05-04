@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Button, Grid, MenuItem, Card, CardContent, Select, Divider } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Grid,
+  MenuItem,
+  Card,
+  CardContent,
+  Select,
+  Divider,
+  FormControl,
+} from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PersonIcon from "@mui/icons-material/Person";
@@ -15,12 +26,19 @@ const EventsPage = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [hostName, setHostName] = useState("");
+  const [date, setDate] = useState("");
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get("/api/manage/eventAll");
-        setEvents(response.data); // Assumes the response is an array of events
+        const params = {};
+        if (hostName) params.hostName = hostName;
+        if (date) params.date = date;
+
+        const response = await axios.get("/api/manage/eventAll", { params });
+        setEvents(response.data);
       } catch (err) {
         setError(err.message || "Failed to fetch events");
       } finally {
@@ -29,8 +47,10 @@ const EventsPage = () => {
     };
 
     fetchEvents();
-  }, []);
+  }, [hostName, date]); // re-fetch when filters change
 
+  console.log(events);
+  
   if (loading) return <div>Loading events...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -42,14 +62,33 @@ const EventsPage = () => {
       <Divider sx={{ my: 2 }} />
       <Grid container spacing={2} alignItems='center' justifyContent='flex-end' mb={2} mt={2}>
         <Grid item xs={12} sm='auto'>
-          <Select size='small' displayEmpty defaultValue='' fullWidth>
-            <MenuItem value=''>Date</MenuItem>
-          </Select>
+          <FormControl fullWidth>
+            <Typography sx={{ fontSize: "14px", color: "black" }}>Date</Typography>
+            <Select
+              value={date}
+              onChange={(e) => setDate(new Date(e.target.value).toISOString().split("T")[0])}
+              displayEmpty
+              size='small'
+            >
+              {events.map((loc, index) => (
+                <MenuItem key={index} value={new Date(loc.date).toISOString().split("T")[0]}>
+                  {new Date(loc.date).toISOString().split("T")[0]}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={12} sm='auto'>
-          <Select size='small' displayEmpty defaultValue='' fullWidth>
-            <MenuItem value=''>Host</MenuItem>
-          </Select>
+          <FormControl fullWidth>
+            <Typography sx={{ fontSize: "14px", color: "black" }}>Host</Typography>
+            <Select value={hostName} onChange={(e) => setHostName(e.target.value)} displayEmpty size='small'>
+              {events.map((loc, index) => (
+                <MenuItem key={index} value={loc.hostName}>
+                  {loc.hostName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={12} sm='auto'>
           <Button
@@ -116,7 +155,10 @@ const EventsPage = () => {
                     type='submit'
                     variant='contained'
                     color='primary'
-                    onClick={() => setOpenEdit(true)}
+                    onClick={() => {
+                      setSelectedEvent(event); // Store the selected event
+                      setOpenEdit(true); // Open the edit dialog
+                    }}
                     sx={{ textTransform: "none" }}
                   >
                     Edit Event
@@ -140,6 +182,7 @@ const EventsPage = () => {
           onClose={() => {
             setOpenCreate(false);
           }}
+          initialValuesEdit={[]}
         />
       </CustomDialog>
 
@@ -155,6 +198,7 @@ const EventsPage = () => {
           onClose={() => {
             setOpenEdit(false);
           }}
+          initialValuesEdit={selectedEvent} // Pass the selected event as initial values
         />
       </CustomDialog>
     </Box>

@@ -22,19 +22,35 @@ const validationSchema = Yup.object({
   hostName: Yup.string().required("Required"),
 });
 
-const CreateEventForm = ({ action, onClose }) => {
-  const handleCreate = async (values) => {
+const CreateEventForm = ({ action, onClose, initialValuesEdit }) => {
+  const handleSubmit = async (values) => {
     try {
-      const response = await axios.post("/api/manage/event", {
-        eventTitle: values.eventTitle,
-        date: values.date,
-        time: values.time,
-        location: values.location,
-        description: values.description,
-        hostName: values.hostName,
-      });
+      if (action === "create") {
+        const formattedDate = new Date(values.date).toISOString().split("T")[0];
+        const response = await axios.post("/api/manage/event", {
+          eventTitle: values.eventTitle,
+          date: formattedDate,
+          time: values.time,
+          location: values.location,
+          description: values.description,
+          hostName: values.hostName,
+        });
 
-      console.log("Event created successfully:", response.data);
+        console.log("Event created successfully:", response.data);
+      } else if (action === "edit" && initialValuesEdit) {
+        const formattedDate = new Date(values.date).toISOString().split("T")[0];
+
+        const response = await axios.put(`/api/manage/event/${initialValuesEdit.id}`, {
+          eventTitle: values.eventTitle,
+          date: formattedDate,
+          time: values.time,
+          location: values.location,
+          description: values.description,
+          hostName: values.hostName,
+        });
+
+        console.log("Event updated successfully:", response.data);
+      }
       onClose();
     } catch (error) {
       if (error.response) {
@@ -46,8 +62,12 @@ const CreateEventForm = ({ action, onClose }) => {
   };
 
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleCreate}>
-      {({ values, errors, touched, handleChange, setFieldValue }) => (
+    <Formik
+      initialValues={action === "create" ? initialValues : initialValuesEdit}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      {({ values, errors, touched, handleChange }) => (
         <Form>
           <Box ml={2} mr={2}>
             <Typography sx={{ fontSize: "14px", color: "black", fontWeight: "bold" }}>Event Title</Typography>
@@ -69,7 +89,7 @@ const CreateEventForm = ({ action, onClose }) => {
                   fullWidth
                   type='date'
                   name='date'
-                  value={values.date}
+                  value={action === "create" ? values.date: new Date(values.date).toISOString().split("T")[0]}
                   onChange={handleChange}
                   error={touched.date && Boolean(errors.date)}
                   helperText={touched.date && errors.date}
