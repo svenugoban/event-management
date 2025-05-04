@@ -34,44 +34,42 @@ const UserProfile = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <Box sx={{ flexGrow: 1, p: 4 }}>
-        <Typography sx={{ fontSize: "24px", fontWeight: "bold", color: "black" }} align='left'>
-          User Profile
-        </Typography>
-        <Divider sx={{ my: 2 }} />
+    <Box sx={{ p: 3 }}>
+      <Typography sx={{ fontSize: "24px", fontWeight: "bold", color: "black" }} align='left'>
+        User Profile
+      </Typography>
+      <Divider sx={{ my: 2 }} />
 
-        <Box sx={{ display: "flex", alignItems: "center", mb: 4 }}>
-          <Avatar alt='Profile' src='/images/person.png' sx={{ width: 80, height: 80, mr: 3 }} />
-          <Box>
-            <Typography variant='h6'>{user.username}</Typography>
-            <Typography sx={{ fontSize: "14px", color: "black" }}>{user.email}</Typography>
-            <Typography sx={{ fontSize: "14px", color: "black" }}>{events?.length} Events</Typography>
-          </Box>
+      <Box sx={{ display: "flex", alignItems: "center", mb: 4 }}>
+        <Avatar alt='Profile' src='/images/person.png' sx={{ width: 80, height: 80, mr: 3 }} />
+        <Box>
+          <Typography variant='h6'>{user.username}</Typography>
+          <Typography sx={{ fontSize: "14px", color: "black" }}>{user.email}</Typography>
+          <Typography sx={{ fontSize: "14px", color: "black" }}>{events?.length} Events</Typography>
         </Box>
-        <Typography sx={{ fontSize: "18px", fontWeight: "bold", color: "black" }} align='left'>
-          Events User Attendending
-        </Typography>
-        <Box mt={1}>
-          {events.map((event, idx) => (
-            <AttendEventCard
-              date={new Date(event.date).getDate()}
-              title={event.eventTitle}
-              location={event.location}
-              datetime={
-                <>
-                  {new Date(event.date).toLocaleDateString("en-CA", {
-                    year: "numeric",
-                    month: "long",
-                    day: "2-digit",
-                  })}{" "}
-                  {event.time}
-                </>
-              }
-              month={new Date(event.date).toLocaleString("default", { month: "long" })}
-            />
-          ))}
-        </Box>
+      </Box>
+      <Typography sx={{ fontSize: "18px", fontWeight: "bold", color: "black" }} align='left'>
+        Events User Attendending
+      </Typography>
+      <Box mt={1}>
+        {events.map((event, idx) => (
+          <AttendEventCard
+            date={new Date(event.date).getDate()}
+            title={event.eventTitle}
+            location={event.location}
+            datetime={
+              <>
+                {new Date(event.date).toLocaleDateString("en-CA", {
+                  year: "numeric",
+                  month: "long",
+                  day: "2-digit",
+                })}{" "}
+                {event.time}
+              </>
+            }
+            month={new Date(event.date).toLocaleString("default", { month: "long" })}
+          />
+        ))}
       </Box>
     </Box>
   );
