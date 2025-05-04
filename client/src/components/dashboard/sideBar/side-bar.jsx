@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, Box, Typography, IconButton } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { FaUser } from "react-icons/fa";
@@ -7,12 +7,15 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { Link, useLocation } from "react-router-dom";
 import "./side-bar.css";
 import CloseIcon from "@mui/icons-material/Close";
+import CustomDialog from "../../../common/customDialog";
+import Logout from "../../logout/logout";
 
 const expandedWidth = 255; // Full width for larger screens
 
 const Sidebar = ({ setIsSidebarCollapsed }) => {
   const location = useLocation(); // Get the current route
   const isActive = (path) => location.pathname === path; // Check if the route matches
+  const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
 
   return (
     <Drawer
@@ -91,26 +94,30 @@ const Sidebar = ({ setIsSidebarCollapsed }) => {
         <Typography ml={2} mt={45}></Typography>
         <ListItem
           button
-          component={Link}
-          to='/logout'
-          onClick={() => window.innerWidth < 1024 && setIsSidebarCollapsed?.(true)}
-          sx={{
-            backgroundColor: isActive("/logout") ? "#e3f2fd" : "transparent",
-            color: isActive("/logout") ? "#1976d2" : "inherit",
+          onClick={() => {
+            if (window.innerWidth < 1024) setIsSidebarCollapsed?.(true);
+            setLogoutDialogOpen(true); // open dialog
           }}
         >
           <ListItemIcon>
-            <ExitToAppIcon
-              fontSize='small'
-              style={{
-                fontSize: "20px",
-                color: isActive("/logout") ? "#1976d2" : "inherit",
-              }}
-            />
+            <ExitToAppIcon fontSize='small' />
           </ListItemIcon>
           <ListItemText primary='Log Out' className='sidebar-text' />
         </ListItem>
       </List>
+      <CustomDialog
+        isOpen={logoutDialogOpen}
+        onClose={() => {
+          setLogoutDialogOpen(false);
+        }}
+        title={"Confirm logout?"}
+      >
+        <Logout
+          onClose={() => {
+            setLogoutDialogOpen(false);
+          }}
+        />
+      </CustomDialog>
     </Drawer>
   );
 };
