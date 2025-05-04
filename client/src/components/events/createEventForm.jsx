@@ -22,8 +22,9 @@ const validationSchema = Yup.object({
   hostName: Yup.string().required("Required"),
 });
 
-const CreateEventForm = ({ action, onClose, initialValuesEdit }) => {
+const CreateEventForm = ({ action, onClose, initialValuesEdit, setRefresh }) => {
   const handleSubmit = async (values) => {
+    setRefresh(false);
     try {
       if (action === "create") {
         const formattedDate = new Date(values.date).toISOString().split("T")[0];
@@ -59,6 +60,7 @@ const CreateEventForm = ({ action, onClose, initialValuesEdit }) => {
         console.error("Request error:", error.message);
       }
     }
+    setRefresh(false); // Set refresh state before making the requests
   };
 
   return (

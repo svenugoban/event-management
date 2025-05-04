@@ -20,6 +20,7 @@ import CreateEventForm from "./createEventForm";
 import CustomDialog from "../../common/customDialog";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { FaUser } from "react-icons/fa";
 
 const EventsPage = () => {
   const user = useSelector((state) => state.auth.user);
@@ -31,6 +32,7 @@ const EventsPage = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [hostName, setHostName] = useState("");
   const [date, setDate] = useState("");
+  const [refresh, setRefresh] = useState(false);
 
   const isEventFuture = (date, time) => {
     const eventDateTime = new Date(`${date}T${time}`);
@@ -55,9 +57,10 @@ const EventsPage = () => {
     };
 
     fetchEvents();
-  }, [hostName, date]); // re-fetch when filters change
+  }, [hostName, date, refresh]); // re-fetch when filters change
 
   const handleRegister = async () => {
+    setRefresh(true); // Set refresh state before making the requests
     try {
       const response = await axios.put(`/api/manage/event/${selectedEvent.id}/register`, {
         username: user.username,
@@ -69,6 +72,7 @@ const EventsPage = () => {
     } catch (error) {
       console.error("Registration failed", error);
     }
+    setRefresh(false); // Set refresh state before making the requests
   };
 
   if (loading) return <div>Loading events...</div>;
@@ -162,6 +166,14 @@ const EventsPage = () => {
                     Attendees: {Array.isArray(event.attendees) ? event.attendees.length : 0}
                   </Typography>
                 </Box>
+                {event.attendees.map((attendee, index) => (
+                  <Box display='flex' alignItems='center' mt={1}>
+                    <FaUser fontSize='small' sx={{ mr: 1 }} />
+                    <Typography key={index} sx={{ fontSize: "14px", color: "black" }}>
+                      {attendee.username}
+                    </Typography>
+                  </Box>
+                ))}
                 <Box display='flex' justifyContent='flex-end' gap={2} mt={3}>
                   <Button
                     size='small'
@@ -207,6 +219,7 @@ const EventsPage = () => {
           onClose={() => {
             setOpenCreate(false);
           }}
+          setRefresh={setRefresh}
           initialValuesEdit={[]}
         />
       </CustomDialog>
@@ -223,6 +236,7 @@ const EventsPage = () => {
           onClose={() => {
             setOpenEdit(false);
           }}
+          setRefresh={setRefresh}
           initialValuesEdit={selectedEvent} // Pass the selected event as initial values
         />
       </CustomDialog>

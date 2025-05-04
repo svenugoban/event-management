@@ -1,41 +1,38 @@
-import React from "react";
-import { Box, Avatar, Typography, Paper, Divider } from "@mui/material";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-
-const EventCard = ({ date, title, location, datetime }) => (
-  <Paper sx={{ p: 2, display: "flex", justifyContent: "space-between", mb: 2 }}>
-    <Box sx={{ display: "flex" }}>
-      <Box
-        sx={{
-          width: 48,
-          height: 48,
-          backgroundColor: "#f0f0f0",
-          borderRadius: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          mr: 2,
-        }}
-      >
-        <Typography sx={{ fontSize: "14px", color: "black" }}>APR</Typography>
-        <Typography sx={{ fontSize: "14px", color: "black" }}>{date}</Typography>
-      </Box>
-      <Box>
-        <Typography sx={{ fontSize: "14px", color: "black", fontWeight: "bold" }}>{title}</Typography>
-        <Typography sx={{ fontSize: "14px", color: "black", display: "flex", alignItems: "center" }}>
-          <LocationOnIcon sx={{ fontSize: 16, mr: 0.5 }} /> {location}
-        </Typography>
-        <Typography sx={{ fontSize: "14px", color: "black", display: "flex", alignItems: "center" }}>
-          <CalendarTodayIcon sx={{ fontSize: 16, mr: 0.5 }} /> {datetime}
-        </Typography>
-      </Box>
-    </Box>
-  </Paper>
-);
+import React, { useEffect, useState } from "react";
+import { Box, Avatar, Typography, Divider } from "@mui/material";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import AttendEventCard from "./attendEventsCard";
 
 const UserProfile = () => {
+  const user = useSelector((state) => state.auth.user);
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get("/api/manage/eventAll");
+
+        const filteredEvents = response.data.filter((event) =>
+          event.attendees?.some((attendee) => attendee.username === user.username)
+        );
+
+        setEvents(filteredEvents);
+      } catch (err) {
+        setError(err.message || "Failed to fetch events");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, [user.username]);
+
+  if (loading) return <div>Loading events...</div>;
+  if (error) return <div>Error: {error}</div>;
+
   return (
     <Box sx={{ display: "flex" }}>
       <Box sx={{ flexGrow: 1, p: 4 }}>
@@ -45,34 +42,36 @@ const UserProfile = () => {
         <Divider sx={{ my: 2 }} />
 
         <Box sx={{ display: "flex", alignItems: "center", mb: 4 }}>
-          <Avatar src='https://randomuser.me/api/portraits/women/44.jpg' sx={{ width: 80, height: 80, mr: 3 }} />
+          <Avatar alt='Profile' src='/images/person.png' sx={{ width: 80, height: 80, mr: 3 }} />
           <Box>
-            <Typography variant='h6'>Sarah Anderson</Typography>
-            <Typography sx={{ fontSize: "14px", color: "black" }}>@Sarahanderson</Typography>
-            <Typography sx={{ fontSize: "14px", color: "black" }}>12 Events</Typography>
+            <Typography variant='h6'>{user.username}</Typography>
+            <Typography sx={{ fontSize: "14px", color: "black" }}>{user.email}</Typography>
+            <Typography sx={{ fontSize: "14px", color: "black" }}>{events?.length} Events</Typography>
           </Box>
         </Box>
         <Typography sx={{ fontSize: "18px", fontWeight: "bold", color: "black" }} align='left'>
           Events User Attendending
         </Typography>
-        <EventCard
-          date='15'
-          title='Marketing Workshop 2025'
-          location='Hatch Working Space, Colombo'
-          datetime='Apr 20, 2025 – 10.00 AM'
-        />
-        <EventCard
-          date='15'
-          title='Marketing Workshop 2025'
-          location='Hatch Working Space, Colombo'
-          datetime='Apr 20, 2025 – 10.00 AM'
-        />
-        <EventCard
-          date='15'
-          title='Marketing Workshop 2025'
-          location='Hatch Working Space, Colombo'
-          datetime='Apr 20, 2025 – 10.00 AM'
-        />
+        <Box mt={1}>
+          {events.map((event, idx) => (
+            <AttendEventCard
+              date={new Date(event.date).getDate()}
+              title={event.eventTitle}
+              location={event.location}
+              datetime={
+                <>
+                  {new Date(event.date).toLocaleDateString("en-CA", {
+                    year: "numeric",
+                    month: "long",
+                    day: "2-digit",
+                  })}{" "}
+                  {event.time}
+                </>
+              }
+              month={new Date(event.date).toLocaleString("default", { month: "long" })}
+            />
+          ))}
+        </Box>
       </Box>
     </Box>
   );
