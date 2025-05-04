@@ -27,8 +27,8 @@ const CreateEventForm = ({ action, onClose }) => {
     try {
       const response = await axios.post("/api/manage/event", {
         eventTitle: values.eventTitle,
-        date: values.date, // Format: YYYY-MM-DD
-        time: values.time, // Format: HH:mm:ss
+        date: values.date,
+        time: values.time,
         location: values.location,
         description: values.description,
         hostName: values.hostName,
@@ -73,6 +73,12 @@ const CreateEventForm = ({ action, onClose }) => {
                   onChange={handleChange}
                   error={touched.date && Boolean(errors.date)}
                   helperText={touched.date && errors.date}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  inputProps={{
+                    min: new Date().toISOString().split("T")[0], // Sets today's date as the minimum date
+                  }}
                 />
               </Grid>
               <Grid item xs={6}>

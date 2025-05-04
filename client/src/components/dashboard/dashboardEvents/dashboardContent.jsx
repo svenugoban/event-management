@@ -27,7 +27,7 @@ const DashboardContent = () => {
         date='Apr 15, 2025 – 09.00 AM'
         location='Hatch Working Space, Colombo'
         host='Jhon Smith'
-        description='Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit...hfvuiewbgvjbvhrbfdhbrfdbfdbh'
+        description='Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit'
       />
 
       <EventCard

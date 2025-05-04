@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Button, Grid, MenuItem, Card, CardContent, Select, Divider } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -7,31 +7,32 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import PeopleIcon from "@mui/icons-material/People";
 import CreateEventForm from "./createEventForm";
 import CustomDialog from "../../common/customDialog";
-
-const mockEvents = [
-  {
-    title: "Marketing Workshop 2025",
-    date: "Apr 20, 2025 - 10.00 AM",
-    location: "Hatch Working Space, Colombo",
-    host: "Jhon Smith",
-    attendees: 48,
-    description:
-      "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua. Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat.",
-  },
-  {
-    title: "Marketing Workshop 2025",
-    date: "Apr 20, 2025 - 10.00 AM",
-    location: "Hatch Working Space, Colombo",
-    host: "Jhon Smith",
-    attendees: 48,
-    description:
-      "Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua. Ut Enim Ad Minim Veniam, Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat.",
-  },
-];
+import axios from "axios";
 
 const EventsPage = () => {
   const [openCreate, setOpenCreate] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get("/api/manage/eventAll");
+        setEvents(response.data); // Assumes the response is an array of events
+      } catch (err) {
+        setError(err.message || "Failed to fetch events");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  if (loading) return <div>Loading events...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <Box sx={{ p: 3 }}>
@@ -63,15 +64,24 @@ const EventsPage = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={2} mt={2}>
-        {mockEvents.map((event, idx) => (
-          <Grid item sm={12} lg={6} key={idx}>
+      <Box>
+        {events.map((event, idx) => (
+          <Box mt={2}>
             <Card>
               <CardContent>
-                <Typography fontWeight='bold'>{event.title}</Typography>
+                <Box display='flex' alignItems='center' mt={1}>
+                  <Typography fontWeight='bold'>{event.eventTitle}</Typography>
+                </Box>
                 <Box display='flex' alignItems='center' mt={1}>
                   <CalendarTodayIcon fontSize='small' sx={{ mr: 1 }} />
-                  <Typography sx={{ fontSize: "14px", color: "black" }}>{event.date}</Typography>
+                  <Typography sx={{ fontSize: "14px", color: "black" }}>
+                    {new Date(event.date).toLocaleDateString("en-CA", {
+                      year: "numeric",
+                      month: "long",
+                      day: "2-digit",
+                    })}{" "}
+                    {event.time}
+                  </Typography>
                 </Box>
                 <Box display='flex' alignItems='center' mt={1}>
                   <LocationOnIcon fontSize='small' sx={{ mr: 1 }} />
@@ -79,7 +89,9 @@ const EventsPage = () => {
                 </Box>
                 <Box display='flex' alignItems='center' mt={1}>
                   <PersonIcon fontSize='small' sx={{ mr: 1 }} />
-                  <Typography sx={{ fontSize: "14px", color: "black" }}>Hosted By {event.host}</Typography>
+                  <Typography sx={{ fontSize: "14px", color: "black" }}>
+                    Hosted By {event.hostName?.name || event.hostName}
+                  </Typography>
                 </Box>
                 <Box display='flex' alignItems='center' mt={1}>
                   <DescriptionIcon fontSize='small' sx={{ mr: 1 }} />
@@ -92,7 +104,9 @@ const EventsPage = () => {
                 </Typography>
                 <Box display='flex' alignItems='center' mt={2}>
                   <PeopleIcon fontSize='small' sx={{ mr: 1 }} />
-                  <Typography sx={{ fontSize: "14px", color: "black" }}>Attendees ({event.attendees})</Typography>
+                  <Typography sx={{ fontSize: "14px", color: "black" }}>
+                    Attendees: {Array.isArray(event.attendees) ? event.attendees.length : 0}
+                  </Typography>
                 </Box>
                 <Box display='flex' justifyContent='flex-end' gap={2} mt={3}>
                   <Button size='small' variant='contained' color='success' sx={{ textTransform: "none" }}>
@@ -102,9 +116,7 @@ const EventsPage = () => {
                     type='submit'
                     variant='contained'
                     color='primary'
-                    onClick={() => {
-                      setOpenEdit(true);
-                    }}
+                    onClick={() => setOpenEdit(true)}
                     sx={{ textTransform: "none" }}
                   >
                     Edit Event
@@ -112,9 +124,9 @@ const EventsPage = () => {
                 </Box>
               </CardContent>
             </Card>
-          </Grid>
+          </Box>
         ))}
-      </Grid>
+      </Box>
 
       <CustomDialog
         isOpen={openCreate}

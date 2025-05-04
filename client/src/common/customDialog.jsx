@@ -1,29 +1,18 @@
-import React from "react";
-import { Dialog, DialogTitle, DialogContent, Typography, IconButton, Box } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, IconButton, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-const CustomDialog = ({
-  isOpen,
-  title,
-  contentText,
-  children,
-  onClose, // ✅ Add this to handle the close action
-  fullWidth = true,
-}) => {
+const CustomDialog = ({ isOpen, onClose, title, children }) => {
   return (
-    <Dialog open={isOpen} onClose={onClose} fullWidth={fullWidth}>
+    <Dialog open={isOpen} onClose={onClose} fullWidth>
       <DialogTitle>
         <Box display='flex' justifyContent='space-between' alignItems='center'>
-          <DialogTitle>{title}</DialogTitle>
-          <IconButton aria-label='close' onClick={onClose}>
+          {title}
+          <IconButton onClick={onClose}>
             <CloseIcon />
           </IconButton>
         </Box>
       </DialogTitle>
-      <DialogContent>
-        {contentText && <Typography sx={{ fontSize: "14px", mb: 2 }}>{contentText}</Typography>}
-        {children}
-      </DialogContent>
+      <DialogContent>{children}</DialogContent>
     </Dialog>
   );
 };
