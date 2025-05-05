@@ -52,7 +52,7 @@ const DashboardContent = () => {
           <FormControl fullWidth>
             <Typography sx={{ fontSize: "14px", color: "black" }}>Date</Typography>
             <Select value={date} onChange={(e) => setDate(e.target.value)} displayEmpty size='small'>
-              {events.map((loc, index) => (
+              {events?.map((loc, index) => (
                 <MenuItem key={index} value={loc.date}>
                   {loc.date}
                 </MenuItem>
@@ -64,7 +64,7 @@ const DashboardContent = () => {
           <FormControl fullWidth>
             <Typography sx={{ fontSize: "14px", color: "black" }}>Host</Typography>
             <Select value={hostName} onChange={(e) => setHostName(e.target.value)} displayEmpty size='small'>
-              {events.map((loc, index) => (
+              {events?.map((loc, index) => (
                 <MenuItem key={index} value={loc.hostName}>
                   {loc.hostName}
                 </MenuItem>

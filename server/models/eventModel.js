@@ -49,7 +49,7 @@ class Event {
   
     const [rows] = await pool.query(query, values);
   
-    return rows.map((row) => ({
+    return rows?.map((row) => ({
       ...row,
       attendees: typeof row.attendees === "string" ? JSON.parse(row.attendees) : row.attendees,
     }));

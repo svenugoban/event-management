@@ -88,7 +88,7 @@ const EventsPage = () => {
           <FormControl fullWidth>
             <Typography sx={{ fontSize: "14px", color: "black" }}>Date</Typography>
             <Select value={date} onChange={(e) => setDate(e.target.value)} displayEmpty size='small'>
-              {events.map((loc, index) => (
+              {events?.map((loc, index) => (
                 <MenuItem key={index} value={loc.date}>
                   {loc.date}
                 </MenuItem>
@@ -100,7 +100,7 @@ const EventsPage = () => {
           <FormControl fullWidth>
             <Typography sx={{ fontSize: "14px", color: "black" }}>Host</Typography>
             <Select value={hostName} onChange={(e) => setHostName(e.target.value)} displayEmpty size='small'>
-              {events.map((loc, index) => (
+              {events?.map((loc, index) => (
                 <MenuItem key={index} value={loc.hostName}>
                   {loc.hostName}
                 </MenuItem>
@@ -122,7 +122,7 @@ const EventsPage = () => {
       </Grid>
 
       <Box>
-        {events.map((event, idx) => (
+        {events?.map((event, idx) => (
           <Box mt={2}>
             <Card>
               <CardContent>
@@ -165,7 +165,7 @@ const EventsPage = () => {
                     Attendees: {Array.isArray(event.attendees) ? event.attendees.length : 0}
                   </Typography>
                 </Box>
-                {event.attendees.map((attendee, index) => (
+                {event.attendees?.map((attendee, index) => (
                   <Box display='flex' alignItems='center' mt={1}>
                     <FaUser fontSize='small' sx={{ mr: 1 }} />
                     <Typography key={index} sx={{ fontSize: "14px", color: "black" }}>

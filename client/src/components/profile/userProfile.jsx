@@ -52,7 +52,7 @@ const UserProfile = () => {
         Events User Attendending
       </Typography>
       <Box mt={1}>
-        {events.map((event, idx) => (
+        {events?.map((event, idx) => (
           <AttendEventCard
             date={new Date(event.date).getDate()}
             title={event.eventTitle}
