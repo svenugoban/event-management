@@ -40,6 +40,21 @@ const EventsPage = () => {
     return eventDateTime > now;
   };
 
+  const handleRegister = async (event) => {
+    setRefresh(true); // Set refresh state before making the requests
+    try {
+      await axios.put(`/api/manage/event/${event?.id}/register`, {
+        username: user.username,
+        email: user.email,
+      });
+
+      
+    } catch (error) {
+      console.error("Registration failed", error);
+    }
+    setRefresh(false); // Set refresh state before making the requests
+  };
+
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -58,22 +73,6 @@ const EventsPage = () => {
 
     fetchEvents();
   }, [hostName, date, refresh]); // re-fetch when filters change
-
-  const handleRegister = async () => {
-    setRefresh(true); // Set refresh state before making the requests
-    try {
-      const response = await axios.put(`/api/manage/event/${selectedEvent.id}/register`, {
-        username: user.username,
-        email: user.email,
-      });
-
-      // Optional: update local state or refetch event list
-      console.log("Registered:", response.data);
-    } catch (error) {
-      console.error("Registration failed", error);
-    }
-    setRefresh(false); // Set refresh state before making the requests
-  };
 
   if (loading) return <div>Loading events...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -182,8 +181,7 @@ const EventsPage = () => {
                     sx={{ textTransform: "none" }}
                     disabled={!isEventFuture(event.date, event.time)}
                     onClick={() => {
-                      setSelectedEvent(event);
-                      handleRegister();
+                      handleRegister(event);
                     }}
                   >
                     {isEventFuture(event.date, event.time) ? "Register Now" : " Past Event"}

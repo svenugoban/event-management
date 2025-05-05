@@ -137,7 +137,7 @@ const Login = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        textTransform:"none"
+                        textTransform: "none",
                       }}
                     >
                       {isSubmitting ? (

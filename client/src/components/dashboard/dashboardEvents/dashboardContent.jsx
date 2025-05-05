@@ -40,6 +40,7 @@ const DashboardContent = () => {
 
   if (loading) return <div>Loading events...</div>;
   if (error) return <div>Error: {error}</div>;
+
   return (
     <Box sx={{ p: 3 }}>
       <Typography sx={{ fontSize: "24px", fontWeight: "bold", color: "black" }} align='left'>

@@ -14,21 +14,21 @@ const initialValues = {
 };
 
 const validationSchema = Yup.object({
-  eventTitle: Yup.string().required("Required"),
-  date: Yup.string().required("Required"),
-  time: Yup.string().required("Required"),
-  location: Yup.string().required("Required"),
-  description: Yup.string().required("Required"),
-  hostName: Yup.string().required("Required"),
+  eventTitle: Yup.string().required("Event Title is required"),
+  date: Yup.string().required("Date is required"),
+  time: Yup.string().required("Time is required"),
+  location: Yup.string().required("Location is required"),
+  description: Yup.string().required("Description is required"),
+  hostName: Yup.string().required("Host Name is required"),
 });
 
 const CreateEventForm = ({ action, onClose, initialValuesEdit, setRefresh }) => {
   const handleSubmit = async (values) => {
-    setRefresh(false);
+    setRefresh(true); // Set refresh state before making the requests
     try {
       if (action === "create") {
         const formattedDate = new Date(values.date).toISOString().split("T")[0];
-        const response = await axios.post("/api/manage/event", {
+        await axios.post("/api/manage/event", {
           eventTitle: values.eventTitle,
           date: formattedDate,
           time: values.time,
@@ -36,12 +36,10 @@ const CreateEventForm = ({ action, onClose, initialValuesEdit, setRefresh }) => 
           description: values.description,
           hostName: values.hostName,
         });
-
-        console.log("Event created successfully:", response.data);
       } else if (action === "edit" && initialValuesEdit) {
         const formattedDate = new Date(values.date).toISOString().split("T")[0];
 
-        const response = await axios.put(`/api/manage/event/${initialValuesEdit.id}`, {
+        await axios.put(`/api/manage/event/${initialValuesEdit.id}`, {
           eventTitle: values.eventTitle,
           date: formattedDate,
           time: values.time,
@@ -49,8 +47,6 @@ const CreateEventForm = ({ action, onClose, initialValuesEdit, setRefresh }) => 
           description: values.description,
           hostName: values.hostName,
         });
-
-        console.log("Event updated successfully:", response.data);
       }
       onClose();
     } catch (error) {
@@ -60,7 +56,7 @@ const CreateEventForm = ({ action, onClose, initialValuesEdit, setRefresh }) => 
         console.error("Request error:", error.message);
       }
     }
-    setRefresh(false); // Set refresh state before making the requests
+    setRefresh(false); // Set refresh state afeter making the requests
   };
 
   return (
