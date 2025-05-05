@@ -8,8 +8,8 @@ This repository contains the code and resources for the 'Event Management' proje
 
 ## Technologies Used
 
-- **Backend:** Node.js
-- **Frontend:** React
+- **Backend:** Node.js , Express.js
+- **Frontend:** React.js
 - **Database:** MySql
 
 Project Setup
