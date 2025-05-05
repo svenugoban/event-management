@@ -47,8 +47,6 @@ const EventsPage = () => {
         username: user.username,
         email: user.email,
       });
-
-      
     } catch (error) {
       console.error("Registration failed", error);
     }
@@ -108,7 +106,7 @@ const EventsPage = () => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={12} sm='auto'>
+        <Grid item xs={12} sm='auto' mt={2}>
           <Button
             sx={{ textTransform: "none" }}
             variant='contained'
