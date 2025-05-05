@@ -16,13 +16,13 @@ Project Setup
 
 # Front End 
 1. clone the project from github
-2. inside the project folder run "npm install"
+2. inside the project folder client run "npm install"
 3. run "npm start"
 
 
 # Back End 
 1. clone the project from github
-2. inside the project folder run "npm install"
+2. inside the project folder server run "npm install"
 3. run "npm run dev"
 
 
